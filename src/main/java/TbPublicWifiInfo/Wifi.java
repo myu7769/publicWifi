@@ -1,0 +1,61 @@
+package TbPublicWifiInfo;
+
+/*공통	list_total_count	총 데이터 건수 (정상조회 시 출력됨)
+        공통	RESULT.CODE	요청결과 코드 (하단 메세지설명 참고)
+        공통	RESULT.MESSAGE	요청결과 메시지 (하단 메세지설명 참고)
+        1	X_SWIFI_MGR_NO	관리번호
+        2	X_SWIFI_WRDOFC	자치구
+        3	X_SWIFI_MAIN_NM	와이파이명
+        4	X_SWIFI_ADRES1	도로명주소
+        5	X_SWIFI_ADRES2	상세주소
+        6	X_SWIFI_INSTL_FLOOR	설치위치(층)
+        7	X_SWIFI_INSTL_TY	설치유형
+        8	X_SWIFI_INSTL_MBY	설치기관
+        9	X_SWIFI_SVC_SE	서비스구분
+        10	X_SWIFI_CMCWR	망종류
+        11	X_SWIFI_CNSTC_YEAR	설치년도
+        12	X_SWIFI_INOUT_DOOR	실내외구분
+        13	X_SWIFI_REMARS3	wifi접속환경
+        14	LAT	Y좌표
+        15	LNT	X좌표
+        16	WORK_DTTM	작업일자*/
+public class Wifi {
+    String X_SWIFI_MGR_NO;
+    String X_SWIFI_WRDOFC;
+    String X_SWIFI_MAIN_NM;
+    String X_SWIFI_ADRES1;
+    String X_SWIFI_ADRES2;
+    String X_SWIFI_INSTL_FLOOR;
+    String X_SWIFI_INSTL_TY;
+    String X_SWIFI_INSTL_MBY;
+    String X_SWIFI_SVC_SE;
+    String X_SWIFI_CMCWR;
+    String X_SWIFI_CNSTC_YEAR;
+    String X_SWIFI_INOUT_DOOR;
+    String X_SWIFI_REMARS3;
+    String LAT;
+    String LNT;
+    String WORK_DTTM;
+
+    @Override
+    public String toString() {
+        return "Wifi{" +
+                "X_SWIFI_MGR_NO='" + X_SWIFI_MGR_NO + '\'' +
+                ", X_SWIFI_WRDOFC='" + X_SWIFI_WRDOFC + '\'' +
+                ", X_SWIFI_MAIN_NM='" + X_SWIFI_MAIN_NM + '\'' +
+                ", X_SWIFI_ADRES1='" + X_SWIFI_ADRES1 + '\'' +
+                ", X_SWIFI_ADRES2='" + X_SWIFI_ADRES2 + '\'' +
+                ", X_SWIFI_INSTL_FLOOR='" + X_SWIFI_INSTL_FLOOR + '\'' +
+                ", X_SWIFI_INSTL_TY='" + X_SWIFI_INSTL_TY + '\'' +
+                ", X_SWIFI_INSTL_MBY='" + X_SWIFI_INSTL_MBY + '\'' +
+                ", X_SWIFI_SVC_SE='" + X_SWIFI_SVC_SE + '\'' +
+                ", X_SWIFI_CMCWR='" + X_SWIFI_CMCWR + '\'' +
+                ", X_SWIFI_CNSTC_YEAR='" + X_SWIFI_CNSTC_YEAR + '\'' +
+                ", X_SWIFI_INOUT_DOOR='" + X_SWIFI_INOUT_DOOR + '\'' +
+                ", X_SWIFI_REMARS3='" + X_SWIFI_REMARS3 + '\'' +
+                ", LAT='" + LAT + '\'' +
+                ", LNT='" + LNT + '\'' +
+                ", WORK_DTTM='" + WORK_DTTM + '\'' +
+                '}';
+    }
+}
