@@ -1,0 +1,21 @@
+create table swifi
+(
+    SWIFI_MGR_NO      varchar(10) not null
+        primary key,
+    SWIFI_WRDOFC      varchar(50) null,
+    SWIFI_MAIN_NM     varchar(50) null,
+    SWIFI_ADRES1      varchar(50) null,
+    SWIFI_ADRES2      varchar(50) null,
+    SWIFI_INSTL_FLOOR varchar(50) null,
+    SWIFI_INSTL_TY    varchar(50) null,
+    SWIFI_INSTL_MBY   varchar(50) null,
+    SWIFI_SVC_SE      varchar(50) null,
+    SWIFI_CMCWR       varchar(50) null,
+    SWIFI_CNSTC_YEAR  year        null,
+    SWIFI_INOUT_DOOR  varchar(50) null,
+    SWIFI_REMARS3     varchar(50) null,
+    LAT               double      null,
+    LNT               double      null,
+    WORK_DTTM         datetime    null
+);
+

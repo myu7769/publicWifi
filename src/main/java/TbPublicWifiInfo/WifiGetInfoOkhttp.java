@@ -19,7 +19,7 @@ public class WifiGetInfoOkhttp {
     static String serviceName = "/TbPublicWifiInfo";
     public ArrayList<Wifi> getUserInfo() {
         try {
-            String url = "http://openapi.seoul.go.kr:8088" + key + dataType + serviceName + "/1/3/관악구/봉천로";
+            String url = "http://openapi.seoul.go.kr:8088" + key + dataType + serviceName + "/1/1000/관악구";
 //            String url = "http://openapi.seoul.go.kr:8088/sample/json/TbPublicWifiInfo/1/3/서대문구/서소문로";
             OkHttpClient client = new OkHttpClient();
             Request.Builder builder = new Request.Builder().url(url).get();
@@ -31,19 +31,14 @@ public class WifiGetInfoOkhttp {
                 ResponseBody body = response.body();
                 if (body != null) {
                     String obj = body.string();
-//                    System.out.println(obj);
                     JsonParser jsonParser = new JsonParser();
                     JsonObject object = (JsonObject) jsonParser.parse(obj);
                     object = (JsonObject)object.get("TbPublicWifiInfo");
                     JsonArray array = (JsonArray)object.get("row");
                     Gson gson = new Gson();
                     for(Object arr : array){
-//                        System.out.println(arr.toString());
                         wifis.add(gson.fromJson(arr.toString(), Wifi.class));
                     }
-
-//                    Wifi wifi = gson.fromJson(Json, Wifi.class);
-//                    wifi.toString();
                 }
             }
             else
