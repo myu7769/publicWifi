@@ -1,3 +1,4 @@
+<%@ page import="Location.*" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -8,15 +9,25 @@
         }
     </style>
     <title>JSP - Hello World</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function myLocation() {
-            <%
-
-
-
-            %>
-
-            document.getElementById("myText").innerHTML = "새로운 텍스트";
+            $.ajax({
+                url: "getLocation.jsp",
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    // alert(data.lat);
+                    // alert(data.lnt);
+                    // $("#LAT").text(data.lat);
+                    // $("#LNT").text(data.lnt);
+                    document.getElementById("LAT").value = data.lat;
+                    document.getElementById("LNT").value = data.lnt;
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error: " + error);
+                }
+            });
         }
     </script>
 </head>
@@ -30,7 +41,7 @@
 <a href="hello-servlet">즐겨 찾기 그룹 보기</a>
 <br/>
 <br/>
-<p>LAT: <input type="Text" name="LAT" value="0.0"  size="15"> LNT: </p> <input type="Text" name="LNT:" value="0.0" size="15">
+<p>LAT: <input type="Text" id="LAT" value="0.0"  size="15"> LNT: </p> <input type="Text" id="LNT" value="0.0" size="15">
 <button type="button" onclick="myLocation()">내 위치 가져오기</button>
 <button type="button" onclick="myFunction()">근처 WIFI 정보 보기</button>
 </body>

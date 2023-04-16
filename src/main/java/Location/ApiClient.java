@@ -92,7 +92,7 @@ public class ApiClient {
 		request.setHeader("x-ncp-apigw-timestamp",timestamp);
 		request.setHeader("x-ncp-iam-access-key",accessKey);
 		request.setHeader("x-ncp-apigw-signature-v2",signature);
-		
+
 		final CloseableHttpResponse response;
 		response = httpClient.execute(request);
 
