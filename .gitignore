@@ -11,7 +11,7 @@ target/
 *.iws
 *.iml
 *.ipr
-../src/main/java/Location/ApiKeys.java
+src/main/java/Location/ApiKeys.java
 
 ### Eclipse ###
 .apt_generated
