@@ -85,7 +85,7 @@ public class DataBaseService {
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
 
-        if(wifi.size() == 0){
+        if(wifi == null){
             return;
         }
 
@@ -132,10 +132,10 @@ public class DataBaseService {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             // 연결을 닫습니다.
             try {
                 if (rs != null && !rs.isClosed()) {

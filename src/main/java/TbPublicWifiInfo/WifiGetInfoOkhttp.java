@@ -17,10 +17,24 @@ public class WifiGetInfoOkhttp {
     static String key = "/684252656c6d7975353070676d6f63";
     static String dataType = "/json";
     static String serviceName = "/TbPublicWifiInfo";
-    public ArrayList<Wifi> getUserInfo() {
+    public ArrayList<Wifi> getWifiInfo(int start, int end, String address) {
+
+        if(start < 0 || start > end || address == null){ // 한번에 요청량 1000이 넘어가면 response 에러남
+            return null;
+        }
+
+        StringBuilder urlSb = new StringBuilder("http://openapi.seoul.go.kr:8088" + key + dataType + serviceName +"/");
+        urlSb.append(start);
+        urlSb.append("/");
+        urlSb.append(end);
+        urlSb.append("/");
+        urlSb.append(address);
+        String url = urlSb.toString();
+
+        System.out.println("url = " + url);
+
         try {
-            String url = "http://openapi.seoul.go.kr:8088" + key + dataType + serviceName + "/1/1000/관악구";
-//            String url = "http://openapi.seoul.go.kr:8088/sample/json/TbPublicWifiInfo/1/3/서대문구/서소문로";
+            // String url = "http://openapi.seoul.go.kr:8088/sample/json/TbPublicWifiInfo/1/3/서대문구/서소문로";
             OkHttpClient client = new OkHttpClient();
             Request.Builder builder = new Request.Builder().url(url).get();
             Request request = builder.build();
@@ -34,6 +48,9 @@ public class WifiGetInfoOkhttp {
                     JsonParser jsonParser = new JsonParser();
                     JsonObject object = (JsonObject) jsonParser.parse(obj);
                     object = (JsonObject)object.get("TbPublicWifiInfo");
+                    if(object == null){
+                        return null;
+                    }
                     JsonArray array = (JsonArray)object.get("row");
                     Gson gson = new Gson();
                     for(Object arr : array){
