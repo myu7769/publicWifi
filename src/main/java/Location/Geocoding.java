@@ -9,14 +9,14 @@ public class Geocoding {
     public Location getLocation() {
 
         String ip = new ipSearch().getIpAddress(); // 공인 IP 입력
-        ApiKeys apikeys = new ApiKeys();
-        ApiClient apiClient = new ApiClient(apikeys.getAccessKey(), apikeys.getSecretKey());
+//        ApiKeys apikeys = new ApiKeys();
+//        ApiClient apiClient = new ApiClient(apikeys.getAccessKey(), apikeys.getSecretKey());
         String response = "";
         String objectLat;
         String objectLnt;
 
         try {
-            response = apiClient.run(ip);
+//            response = apiClient.run(ip);
             JsonParser jsonParser = new JsonParser();
             JsonObject object = (JsonObject) jsonParser.parse(response);
             object = (JsonObject)object.get("geoLocation");
@@ -27,7 +27,5 @@ public class Geocoding {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
     }
 }

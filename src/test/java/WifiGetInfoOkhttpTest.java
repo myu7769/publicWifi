@@ -14,7 +14,7 @@ public class WifiGetInfoOkhttpTest {
         ArrayList<Wifi> wifisTest = new ArrayList<>();
         int start = 1;
         int end = 1000;
-        wifisTest = wifiGetInfoOkhttp.getWifiInfo( start,end,"관악구");
+        wifisTest = wifiGetInfoOkhttp.getWifiInfo( start,end,"");
 
         if (wifisTest == null) {
             System.out.println("error");

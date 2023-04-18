@@ -4,7 +4,7 @@ import Database.DataBaseService;
 
 import java.util.ArrayList;
 
-public class getController {
+public class getControllersub {
 
 
     private static ArrayList<Wifi> wifis;
@@ -17,32 +17,29 @@ public class getController {
         int successCnt = 0;
         int cnt = 0;
         System.out.println(ADDRESS.length);
+        int start = 1;
+        int end = 1000;
+        cnt = 0;
         try {
-            for (int i = 0; i < ADDRESS.length; i++) {
-                int start = 1;
-                int end = 1000;
-                cnt = 0;
-
-                int wifiSize = 1000;
+                 int wifiSize = 1000;
 
                 while(wifiSize == 1000){
 
-                    wifis = wifi.getWifiInfo(start,end,ADDRESS[i]);
+                    wifis = wifi.getWifiInfo(start,end,"");
                     if(wifis == null){
                         break;
                     }
                     wifiSize = wifis.size();
 
-//                    dataBaseService.insertWifiList(wifis);
+                    dataBaseService.insertWifiList(wifis);
                     successCnt += wifiSize;
                     start += 1000;
                     end += 1000;
-//                cnt++;//
-//                System.out.println("cnt = " + cnt);
-//                System.out.println("     wifiSize = " + wifiSize);
-                System.out.println("successCnt = " + successCnt);
+//                  cnt++;//
+//                  System.out.println("cnt = " + cnt);
+//                  System.out.println("     wifiSize = " + wifiSize);
+                    System.out.println("successCnt = " + successCnt);
                 }
-            }
         }catch (Exception e) {
             e.printStackTrace();
             return successCnt;
