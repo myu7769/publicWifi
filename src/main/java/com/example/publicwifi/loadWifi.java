@@ -23,7 +23,7 @@ public class loadWifi extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;charset=UTF-8");
-        // Hello
+
         PrintWriter out = response.getWriter();
         out.print("<html><head><title>Query 문자열 테스트</title></head>");
         out.println("<body>");

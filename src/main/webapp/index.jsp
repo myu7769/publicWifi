@@ -12,8 +12,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function myLocation() {
+        // 37.4832772, 126.9517056 오차가 있네
             $.ajax({
-                url: "getLocation.jsp",
+                url: "getLocation",
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
@@ -41,8 +42,16 @@
 <a href="hello-servlet">즐겨 찾기 그룹 보기</a>
 <br/>
 <br/>
-<p>LAT: <input type="Text" id="LAT" value="0.0"  size="15"> LNT: </p> <input type="Text" id="LNT" value="0.0" size="15">
-<button type="button" onclick="myLocation()">내 위치 가져오기</button>
-<button type="button" onclick="myFunction()">근처 WIFI 정보 보기</button>
+<p>LAT: <input type="Text" id="LAT" value="<%= request.getAttribute("LAT") != null ? request.getAttribute("LAT") : "0.0" %>" size="15"> LNT: </p>
+<input type="Text" id="LNT" value= "<%= request.getAttribute("LNT") != null ? request.getAttribute("LNT") : "0.0" %>" size="15">
+<button type="button" onclick="myLocation()"> 내 위치 가져오기</button>
+<%--<form action="gApiButton" method="get">--%>
+<%--    <label for="LAT"></label>--%>
+<%--    <input type="text" name="LAT" required>--%>
+<%--    <label for="LNT"></label>--%>
+<%--    <input type="text" name="LNT" required>--%>
+<%--    <input type="submit" value="근처 WIFI 정보 보기">--%>
+<%--</form>--%>
+<%--<button type="button" onclick="myFunction()">근처 WIFI 정보 보기</button>--%>
 </body>
 </html>
