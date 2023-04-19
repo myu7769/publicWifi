@@ -17,8 +17,13 @@ public class loadWifi extends HttpServlet {
 
     public void init() {
         getController getController = new getController();
+        long beforeTime = System.currentTimeMillis();
         int wifiAllCnt = getController.getAllWifi();
         message = wifiAllCnt +"";
+
+        long afterTime = System.currentTimeMillis();
+
+        System.out.println("시간 차이(ms) : " + (afterTime - beforeTime));
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

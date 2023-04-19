@@ -2,7 +2,6 @@ import TbPublicWifiInfo.Wifi;
 import TbPublicWifiInfo.WifiGetInfoOkhttp;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import TbPublicWifiInfo.getController;
 
 import java.util.ArrayList;
 

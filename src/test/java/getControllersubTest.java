@@ -1,5 +1,4 @@
 import TbPublicWifiInfo.getController;
-import TbPublicWifiInfo.getControllersub;
 import org.junit.jupiter.api.Test;
 
 public class getControllersubTest {
@@ -7,9 +6,9 @@ public class getControllersubTest {
     @Test
     public void getAllWifi(){
 
-        getControllersub getControllersub = new getControllersub();
+        getController getController = new getController();
         long beforeTime = System.currentTimeMillis();
-        getControllersub.getAllWifi();
+        getController.getAllWifi();
         long afterTime = System.currentTimeMillis();
 
         System.out.println("시간 차이(ms) : " + (afterTime - beforeTime));
