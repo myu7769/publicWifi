@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="Location.*" %>
+<%@ page import="Database.DataBaseService" %>
+<%@ page import="Database.Location" %>
 
 <%
   Geocoding geocoding = new Geocoding();

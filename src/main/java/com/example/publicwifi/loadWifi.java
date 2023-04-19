@@ -34,7 +34,7 @@ public class loadWifi extends HttpServlet {
         out.println("<body>");
         out.println("<h1>" + message + "개의 Wifi 정보를 정상적으로 저장하였습니다. </h1>");
         out.println("</body></html>");
-        out.println("<a href=\"index.jsp\">홈 으로 가기</a>");
+        out.println("<a href=\"/\">홈 으로 가기</a>");
         out.close();
     }
 

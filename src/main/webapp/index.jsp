@@ -1,4 +1,9 @@
 <%@ page import="Location.*" %>
+<%@ page import="Database.DataBaseService" %>
+<%@ page import="Database.DisLocation" %>
+<%@ page import="TbPublicWifiInfo.Wifi" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Database.Location" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -54,21 +59,11 @@
 <br/>
 <br/>
 <form id="getWifiTable" action="<%= request.getRequestURI() %>" method="get">
-<p>LAT: <input type="Text" id="LAT" name="LAT" value="<%= request.getAttribute("LAT") != null ? request.getAttribute("LAT") : "0.0" %>" size="15"> LNT: </p>
-<input type="Text" id="LNT" name="LNT" value= "<%= request.getAttribute("LNT") != null ? request.getAttribute("LNT") : "0.0" %>" size="15">
+<p>LAT: <input type="Text" id="LAT" name="LAT" value="<%= request.getParameter("LAT") != null ? request.getParameter("LAT") : "0.0" %>" size="15"> LNT: </p>
+<input type="Text" id="LNT" name="LNT" value= "<%= request.getParameter("LNT") != null ? request.getParameter("LNT") : "0.0" %>" size="15">
 <button type="button" onclick="myLocation()"> 내 위치 가져오기</button>
 <input type="submit" value="근처 WIFI 정보 보기">
 </form>
-
-<%
-    if(request != null) {
-        String LAT = request.getParameter("LAT");
-        String LNT = request.getParameter("LNT");
-
-        System.out.println(LAT);
-        System.out.println(LNT);
-    }
-%>
 <br/>
 <br/>
 <%--<button type="button" onclick="myFunction()">근처 WIFI 정보 보기</button>--%>
@@ -97,6 +92,22 @@
         <tbody>
             <tr>
                 <td colspan="17"><br/>위치 정보 입력 후 조회해주세요.<br/><br/></td>
+
+                <%
+                    String LAT = request.getParameter("LAT");
+                    String LNT = request.getParameter("LNT");
+
+                    if(request != null && LAT != null && LNT != null) {
+                        DataBaseService dataBaseService = new DataBaseService();
+                        ArrayList<Wifi> wifis = dataBaseService.getWifiList();
+                        DisLocation[] disLocation = dataBaseService.getNearWifi(wifis, new Location(LAT,LNT));
+
+                        for (int i = 0; i < disLocation.length; i++) {
+                            System.out.println(disLocation[i].getWifi().toString() + "\nDistances " +disLocation[i].getDistance() + "\n");
+                            System.out.println("i + 1 = " + (i + 1));
+                        }
+                    }
+                %>
             </tr>
         </tbody>
     </table>

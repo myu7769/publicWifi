@@ -1,4 +1,5 @@
 package com.example.publicwifi;
+import Database.Location;
 import Location.*;
 import com.google.gson.Gson;
 
@@ -36,7 +37,6 @@ public class GetLocationServlet extends HttpServlet {
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("lat", lat);
         responseData.put("lnt", lnt);
-
 
 
         // JSON 형식으로 응답

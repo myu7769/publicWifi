@@ -1,6 +1,6 @@
 package Location;
 
-import com.google.gson.JsonArray;
+import Database.Location;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -20,8 +20,8 @@ public class Geocoding {
             JsonParser jsonParser = new JsonParser();
             JsonObject object = (JsonObject) jsonParser.parse(response);
             object = (JsonObject)object.get("geoLocation");
-            objectLat = object.get("lat").getAsString();
-            objectLnt = object.get("long").getAsString();
+            objectLat = object.get("long").getAsString();
+            objectLnt = object.get("lat").getAsString();
 
             return new Location(objectLat, objectLnt);
         } catch (Exception e) {
