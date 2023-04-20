@@ -120,7 +120,10 @@
         </td>
         <td><%=disLocation[i].getWifi().getX_SWIFI_WRDOFC()%>
         </td>
-        <td><%=disLocation[i].getWifi().getX_SWIFI_MAIN_NM()%>
+        <td>
+            <a href="detail.jsp?mgrNo=<%=disLocation[i].getWifi().getX_SWIFI_MGR_NO()%>&distance=<%=disLocation[i].getDistance()%>">
+                <%=disLocation[i].getWifi().getX_SWIFI_MAIN_NM()%>
+            </a>
         </td>
         <td><%=disLocation[i].getWifi().getX_SWIFI_ADRES1()%>
         </td>

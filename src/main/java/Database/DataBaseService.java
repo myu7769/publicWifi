@@ -383,4 +383,78 @@ public class DataBaseService {
 
         return true;
     }
+    public Wifi getWifiDetails(String mgrNo) {
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        Wifi wifi = null;
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+
+            // 쿼리를 실행합니다.
+            String sql = "  select SWIFI_MGR_NO, SWIFI_WRDOFC, SWIFI_MAIN_NM, SWIFI_ADRES1" +
+                    ", SWIFI_ADRES2, SWIFI_INSTL_FLOOR, SWIFI_INSTL_TY, SWIFI_INSTL_MBY " +
+                    ", SWIFI_SVC_SE, SWIFI_CMCWR, SWIFI_CNSTC_YEAR, SWIFI_INOUT_DOOR " +
+                    ", SWIFI_REMARS3, LAT, LNT, WORK_DTTM from swifi where SWIFI_MGR_NO = ? ";
+
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, mgrNo);
+
+            rs = preparedStatement.executeQuery();
+
+
+            // 결과를 처리합니다.
+            // 결과 처리 코드
+            while (rs.next()) {
+                wifi = new Wifi(rs.getString("SWIFI_MGR_NO"), rs.getString("SWIFI_WRDOFC"), rs.getString("SWIFI_MAIN_NM"),
+                        rs.getString("SWIFI_ADRES1"), rs.getString("SWIFI_ADRES2"), rs.getString("SWIFI_INSTL_FLOOR"),
+                        rs.getString("SWIFI_INSTL_TY"), rs.getString("SWIFI_INSTL_MBY"), rs.getString("SWIFI_SVC_SE"),
+                        rs.getString("SWIFI_CMCWR"), rs.getString("SWIFI_CNSTC_YEAR"), rs.getString("SWIFI_INOUT_DOOR"),
+                        rs.getString("SWIFI_REMARS3"), rs.getString("LAT"), rs.getString("LNT"), rs.getString("WORK_DTTM"));
+            }
+
+            if(wifi == null){
+                System.out.println("상세 정보 실패");
+            }else{
+                System.out.println("상세 정보 성공");
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return wifi;
+    }
 }
