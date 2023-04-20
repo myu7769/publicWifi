@@ -1,6 +1,7 @@
 package Database;
 
 import TbPublicWifiInfo.Wifi;
+import org.checkerframework.checker.units.qual.A;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -183,5 +184,203 @@ public class DataBaseService {
             wifiArray[i] = locations.poll();
         }
         return wifiArray;
+    }
+
+    public void saveUserLocation (String lat, String lnt){
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        if (lat == null || lnt == null) {
+            return;
+        }
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+            int affected = 0;
+
+                // 쿼리를 실행합니다.
+            String sql = " insert into userHistory (lat, lnt, checkData) values ( ?, ? , now());";
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1,lat);
+            preparedStatement.setString(2,lnt);
+
+            affected = preparedStatement.executeUpdate();
+
+            // 결과를 처리합니다.
+            if (affected == 1) {
+                System.out.println("user DB 저장 성공");
+            } else {
+                System.out.println("user DB 저장 실패");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+    public ArrayList<User> getUserHistory (){
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        ArrayList<User> userList = new ArrayList<>();
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+            int affected = 0;
+
+            // 쿼리를 실행합니다.
+            String sql = " select id ,lat , lnt , checkData from userHistory; ";
+            preparedStatement = conn.prepareStatement(sql);
+
+            rs = preparedStatement.executeQuery();
+
+            // 결과를 처리합니다.
+            while (rs.next()) {
+                // 결과 처리 코드
+                User user = new User(rs.getString("id"), new Location(rs.getString("lat"), rs.getString("lnt")),rs.getString("checkData"));
+                userList.add(user);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        return userList;
+    }
+
+    public boolean deleteUser(String id){
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        ArrayList<User> userList = new ArrayList<>();
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+            int affected = 0;
+
+            // 쿼리를 실행합니다.
+            String sql = " delete from userHistory where id = ? ; ";
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, id);
+
+            affected = preparedStatement.executeUpdate();
+
+//            sql = " select count(*) from userHistory; ";
+//            preparedStatement = conn.prepareStatement(sql);
+//            rs = preparedStatement.executeQuery();
+//
+//            String check = rs.getString("count(*)");
+//
+//            System.out.println("check = " + check);
+//            
+//            if()
+//            sql = " alter table userHistory AUTO_INCREMENT=1; ";
+
+
+            if(affected == 1){
+                System.out.println("삭제 성공");
+                return true;
+            }else{
+                System.out.println("삭제 실패");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        return true;
     }
 }

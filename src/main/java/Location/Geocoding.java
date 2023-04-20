@@ -20,8 +20,8 @@ public class Geocoding {
             JsonParser jsonParser = new JsonParser();
             JsonObject object = (JsonObject) jsonParser.parse(response);
             object = (JsonObject)object.get("geoLocation");
-            objectLat = object.get("long").getAsString();
-            objectLnt = object.get("lat").getAsString();
+            objectLat = object.get("lat").getAsString();
+            objectLnt = object.get("long").getAsString();
 
             return new Location(objectLat, objectLnt);
         } catch (Exception e) {
