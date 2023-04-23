@@ -15,8 +15,4 @@
 
         response.sendRedirect("bookmark-group.jsp");
     }
-//
-//    String jsonData = "{\"lat\": \"" + lat + "\", \"lnt\": \"" + lnt + "\"}";
-//    response.setContentType("application/json; charset=UTF-8");
-//    response.getWriter().print(jsonData);
 %>

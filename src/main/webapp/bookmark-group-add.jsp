@@ -75,14 +75,10 @@
 <p> | </p>
 <a href="load-wifi">Open API 와이파이 정보 가져오기</a>
 <p> | </p>
-<a href="bookmark-group.jsp">즐겨 찾기 보기</a>
+<a href="bookmark-list.jsp">즐겨 찾기 보기</a>
 <p> | </p>
 <a href="bookmark-group.jsp">즐겨 찾기 그룹 보기</a>
 <br/>
-<%
-//    DataBaseService dataBaseService = new DataBaseService();
-
-%>
 <br/>
 <form accept-charset="UTF-8" id="getWifiTable" method="post">
     <table>

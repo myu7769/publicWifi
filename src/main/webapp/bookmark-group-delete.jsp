@@ -18,7 +18,6 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>북마크 삭제</title>
   <script>
     alert("북마크가 삭제되었습니다.");

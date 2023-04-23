@@ -1,10 +1,14 @@
-<%@ page import="Location.*" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: myung
+  Date: 2023-04-24
+  Time: 오전 5:27
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page import="Database.DataBaseService" %>
-<%@ page import="Database.DisLocation" %>
-<%@ page import="TbPublicWifiInfo.Wifi" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="Database.Location" %>
 <%@ page import="Database.User" %>
+<%@ page import="Database.BookMarkWikis" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -42,26 +46,11 @@
                 type: "GET",
                 dataType: "json",
                 data : {
-                  id : userid
+                    id : userid
                 },
                 success: function(data) {
                     alert("success" + userid);
                     $('#' + data.id).remove();
-                },
-                error: function(xhr, status, error) {
-                    console.log("Error: " + error);
-                }
-            });
-    }
-
-    function myLocation() {
-            $.ajax({
-                url: "getLocation.jsp",
-                type: "GET",
-                dataType: "json",
-                success: function(data) {
-                    document.getElementById("LAT").value = data.lat;
-                    document.getElementById("LNT").value = data.lnt;
                 },
                 error: function(xhr, status, error) {
                     console.log("Error: " + error);
@@ -83,37 +72,37 @@
 <br/>
 <%
     DataBaseService dataBaseService = new DataBaseService();
-    ArrayList<User> userList = new ArrayList<>();
-    userList = dataBaseService.getUserHistory();
+    ArrayList<BookMarkWikis> bookMarkWikisArrayList = dataBaseService.getAllBookMarkWifiS();
+
 %>
-    <table>
-        <thead>
-            <tr>
-            <th>ID</th>
-            <th>X좌표</th>
-            <th>Y좌표</th>
-            <th>조회일자</th>
-            <th>비고</th>
-            </tr>
-        </thead>
-        <tbody>
-        <tr>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>북마크 이름</th>
+        <th>와이파이명</th>
+        <th>등록일자</th>
+        <th>비고</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
             <%
-                for(User user : userList) {
-                    String userId = user.getId();
+                for(BookMarkWikis bookMarkWikis : bookMarkWikisArrayList) {
+                    int bookMarkWikisId = bookMarkWikis.getId();
             %>
-                <tr id="<%=userId%>">
-                <td><%=userId%></td>
-                <td><%=user.getLocation().getLat()%></td>
-                <td><%=user.getLocation().getLnt()%></td>
-                <td><%=user.getCheckTime()%></td>
-                <td style="text-align: center"><button type="button" onclick="userRemove(<%=userId%>)"> 삭제</button></td>
-            </tr>
-            <%
-                }
-            %>
-        </tr>
-        </tbody>
-    </table>
+    <tr id="<%=bookMarkWikisId%>">
+        <td><%=bookMarkWikisId%></td>
+        <td><%=bookMarkWikis.getBookMarkName()%></td>
+        <td><%=bookMarkWikis.getSWIFI_MAIN_NM()%></td>
+        <td><%=bookMarkWikis.getRegisterTime()%></td>
+        <td style="text-align: center"><a href="bookmark-delete.jsp?id=<%=bookMarkWikisId%>">삭제</a></td>
+    </tr>
+    <%
+        }
+    %>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

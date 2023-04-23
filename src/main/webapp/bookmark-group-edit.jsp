@@ -4,7 +4,6 @@
 
 <%
   int id = Integer.parseInt(request.getParameter("id"));
-  System.out.println("id = " + id);
   DataBaseService dataBaseService = new DataBaseService();
   BookMark bookMark = dataBaseService.getBookMarkById(id);
 %>
@@ -56,7 +55,7 @@
 <p> | </p>
 <a href="load-wifi">Open API 와이파이 정보 가져오기</a>
 <p> | </p>
-<a href="bookmark-group.jsp">즐겨 찾기 보기</a>
+<a href="bookmark-list.jsp">즐겨 찾기 보기</a>
 <p> | </p>
 <a href="bookmark-group.jsp">즐겨 찾기 그룹 보기</a>
 <br/>

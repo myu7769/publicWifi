@@ -41,7 +41,8 @@
 <a href="/">홈</a><p> | </p>
 <a href="history.jsp">위치 히스토리 목록</a><p> | </p>
 <a href="load-wifi">Open API 와이파이 정보 가져오기</a><p> | </p>
-<a href="bookmark-group.jsp">즐겨 찾기 보기</a><p> | </p>
+<a href="bookmark-list.jsp">즐겨 찾기 보기</a>
+<p> | </p>
 <a href="bookmark-group.jsp">즐겨 찾기 그룹 보기</a>
 <br/>
 <br/>

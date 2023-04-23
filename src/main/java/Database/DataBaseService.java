@@ -152,11 +152,6 @@ public class DataBaseService {
             }
 
             // 결과를 처리합니다.
-            if (affected == wifis.size()) {
-                System.out.println("Wifi insert 성공");
-            } else {
-                System.out.println("Wifi insert 실패");
-            }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -809,5 +804,268 @@ public class DataBaseService {
 
         }
         return bookMark;
+    }
+    public void addBookMarkWifi (String bookmarkName, String SWIFI_MGR_NO){
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+            int affected = 0;
+
+            // 쿼리를 실행합니다.
+            String sql = " insert into bookmark_wifi (bookmark_name , SWIFI_MGR_NO, registerTime) values ( ?, ? ,now());";
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1,bookmarkName);
+            preparedStatement.setString(2,SWIFI_MGR_NO);
+
+            affected = preparedStatement.executeUpdate();
+
+            // 결과를 처리합니다.
+            if (affected == 1) {
+                System.out.println("bookmark_wifi DB 저장 성공");
+            } else {
+                System.out.println("bookmark_wifi DB 저장 실패");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+
+    public ArrayList<BookMarkWikis> getAllBookMarkWifiS(){
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        ArrayList<BookMarkWikis> bookMarkWikis = new ArrayList<>();
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+
+            // 쿼리를 실행합니다.
+            String sql = " SELECT id , bookmark_name, swifi.SWIFI_MGR_NO as SWIFI_MGR_NO," +
+                    " swifi.SWIFI_MAIN_NM as SWIFI_MAIN_NM , bookmark_wifi.registerTime as registerTime " +
+                    " FROM bookmark_wifi " +
+                    " JOIN swifi ON bookmark_wifi.SWIFI_MGR_NO = swifi.SWIFI_MGR_NO; ";
+
+            preparedStatement = conn.prepareStatement(sql);
+
+            rs = preparedStatement.executeQuery();
+
+            // 결과를 처리합니다.
+            // 결과 처리 코드
+            while (rs.next()) {
+                bookMarkWikis.add(new BookMarkWikis(rs.getInt("id"),
+                        rs.getString("bookmark_name") ,
+                        rs.getString("SWIFI_MGR_NO"),
+                        rs.getString("SWIFI_MAIN_NM"),
+                        rs.getString("registerTime")));
+            }
+
+            if(bookMarkWikis == null){
+                System.out.println("북마크 정보 실패");
+            }else{
+                System.out.println("북마크 정보 성공");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return bookMarkWikis;
+
+
+    }
+
+    public BookMarkWikis getBookMarkWifisById(String id) {
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        BookMarkWikis bookMarkWikis = null;
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+
+            // 쿼리를 실행합니다.
+            String sql = " select id, bookmark_name, swifi.SWIFI_MGR_NO as SWIFI_MGR_NO, swifi.SWIFI_MAIN_NM as SWIFI_MAIN_NM, registerTime " +
+                    " from bookmark_wifi JOIN swifi ON bookmark_wifi.SWIFI_MGR_NO = swifi.SWIFI_MGR_NO where id = ? ;";
+
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, id);
+
+            rs = preparedStatement.executeQuery();
+
+
+            // 결과를 처리합니다.
+            // 결과 처리 코드
+            while (rs.next()) {
+                bookMarkWikis = new BookMarkWikis(rs.getInt("id"), rs.getString("bookmark_name"), rs.getString("SWIFI_MGR_NO"),
+                        rs.getString("SWIFI_MAIN_NM"), rs.getString("registerTime"));
+            }
+
+            if(bookMarkWikis == null){
+                System.out.println("상세 정보 실패");
+            }else{
+                System.out.println("상세 정보 성공");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return bookMarkWikis;
+    }
+    public boolean deleteBookMarkWifiS(int id){
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+            int affected = 0;
+
+            // 쿼리를 실행합니다.
+            String sql = " delete from bookmark_wifi where id = ? ; ";
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            affected = preparedStatement.executeUpdate();
+
+
+            if(affected == 1){
+                System.out.println("삭제 성공");
+                return true;
+            }else{
+                System.out.println("삭제 실패");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        return true;
     }
 }

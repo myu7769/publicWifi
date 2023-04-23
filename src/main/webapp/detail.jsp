@@ -4,6 +4,7 @@
 <%@ page import="TbPublicWifiInfo.Wifi" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Database.Location" %>
+<%@ page import="Database.BookMark" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -58,9 +59,9 @@
 <p> | </p>
 <a href="load-wifi">Open API 와이파이 정보 가져오기</a>
 <p> | </p>
-<a href="hello-servlet">즐겨 찾기 보기</a>
+<a href="bookmark-list.jsp">즐겨 찾기 보기</a>
 <p> | </p>
-<a href="hello-servlet">즐겨 찾기 그룹 보기</a>
+<a href="bookmark-group.jsp">즐겨 찾기 그룹 보기</a>
 <br/>
 <%
     String mgrNo = request.getParameter("mgrNo");
@@ -72,14 +73,26 @@
         Location location = new Location(DataBaseService.getLnt(),DataBaseService.getLat());
         location.setDistance(new Location(wifi.getLAT(),wifi.getLNT()));
         distance = location.getDistance();
+        ArrayList<BookMark> bookMarks = dataBaseService.getAllBookMark();
 
 %>
 <br/>
-<%--<form id="bookMark" action="bookmark-add-summit.jsp" method="get">--%>
-<%--    <input type="Text" id="LNT" name="LNT"--%>
-<%--           value="<%= request.getParameter("LNT") != null ? request.getParameter("LNT") : "0.0" %>" size="15">--%>
-<%--    <input type="submit" value="즐겨찾기 추가하기">--%>
-<%--</form>--%>
+<form id="bookMark" action="bookmark-add-wifi.jsp" method="post">
+    <select name="bookmarkGroup">
+        <option value="0">북마크 그룹 이름 선택</option>
+        <%
+            for(int i=0;i<bookMarks.size();i++){
+                System.out.println("bookMarks = " + bookMarks.get(i).getName());
+
+        %>
+        <option value="<%=bookMarks.get(i).getName()%>"><%=bookMarks.get(i).getName()%></option>
+        <%
+                }
+        %>
+    </select>
+    <input type="hidden" name="SWIFI_MGR_NO" value="<%=wifi.getX_SWIFI_MGR_NO()%>">
+    <input type="submit" value="즐겨찾기 추가하기">
+</form>
 <br/>
 <br/>
 <table>
@@ -106,7 +119,7 @@
         </tr>
     <tr>
         <th>와이파이명</th>
-        <td> <a href="detail.jsp?mgrNo=<%=wifi.getX_SWIFI_MGR_NO()%>&distance=<%=distance%>"> <%=wifi.getX_SWIFI_MAIN_NM()%></a></td>
+        <td> <a href="detail.jsp?mgrNo=<%=wifi.getX_SWIFI_MGR_NO()%>"> <%=wifi.getX_SWIFI_MAIN_NM()%></a></td>
     </tr>
     <tr>
         <th>도로명주소</th>
