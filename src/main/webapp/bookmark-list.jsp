@@ -73,7 +73,6 @@
 <%
     DataBaseService dataBaseService = new DataBaseService();
     ArrayList<BookMarkWikis> bookMarkWikisArrayList = dataBaseService.getAllBookMarkWifiS();
-
 %>
 <table>
     <thead>
@@ -88,18 +87,26 @@
     <tbody>
     <tr>
             <%
+            if(bookMarkWikisArrayList != null && bookMarkWikisArrayList.size() != 0){
                 for(BookMarkWikis bookMarkWikis : bookMarkWikisArrayList) {
                     int bookMarkWikisId = bookMarkWikis.getId();
             %>
     <tr id="<%=bookMarkWikisId%>">
         <td><%=bookMarkWikisId%></td>
         <td><%=bookMarkWikis.getBookMarkName()%></td>
-        <td><%=bookMarkWikis.getSWIFI_MAIN_NM()%></td>
+        <td><a href="detail.jsp?mgrNo=<%=bookMarkWikis.getSWIFI_MGR_NO()%>"> <%=bookMarkWikis.getSWIFI_MAIN_NM()%></a></td>
         <td><%=bookMarkWikis.getRegisterTime()%></td>
         <td style="text-align: center"><a href="bookmark-delete.jsp?id=<%=bookMarkWikisId%>">삭제</a></td>
     </tr>
     <%
-        }
+             }
+            }else {
+    %>
+    <tr>
+    <td style="text-align: center" colspan="6"><br/>정보가 존재하지 않습니다.<br/><br/></td>
+    </tr>
+    <%
+             }
     %>
     </tr>
     </tbody>

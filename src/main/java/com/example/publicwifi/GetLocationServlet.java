@@ -24,9 +24,6 @@ public class GetLocationServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 사용자의 위치 정보를 가져오는 로직
-//        double lat = 37.1234;
-//        double lnt = 127.5678;
 
         Geocoding geocoding = new Geocoding();
         Location location = geocoding.getLocation();

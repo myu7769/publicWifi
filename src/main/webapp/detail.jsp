@@ -1,6 +1,5 @@
 <%@ page import="Location.*" %>
 <%@ page import="Database.DataBaseService" %>
-<%@ page import="Database.DisLocation" %>
 <%@ page import="TbPublicWifiInfo.Wifi" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Database.Location" %>
@@ -70,6 +69,12 @@
     if(request != null && mgrNo != null ) {
         DataBaseService dataBaseService = new DataBaseService();
         Wifi wifi = dataBaseService.getWifiDetails(mgrNo);
+        if(DataBaseService.getLat() == null || DataBaseService.getLnt() == null){
+            Geocoding geocoding = new Geocoding();
+            DataBaseService.setLnt(geocoding.getLocation().getLnt());
+            DataBaseService.setLat(geocoding.getLocation().getLat());
+        }
+
         Location location = new Location(DataBaseService.getLnt(),DataBaseService.getLat());
         location.setDistance(new Location(wifi.getLAT(),wifi.getLNT()));
         distance = location.getDistance();

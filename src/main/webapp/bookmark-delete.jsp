@@ -68,8 +68,7 @@
     BookMarkWikis bookMarkWikis = dataBaseService.getBookMarkWifisById(id); // id
 
 %>
-<br/>
-<br/>
+<p>북마크를 삭제하시겠습니까?</p>
 <br/>
 <form action="bookmark-delete-submit.jsp" method="post" onsubmit="event.preventDefault(); submitForm(this);">
 <table>
@@ -95,10 +94,6 @@
     <input type="hidden" id="id" name="id" value="<%=bookMarkWikis.getId()%>">
     <td style="text-align: center" colspan="2"><a href="bookmark-list.jsp">돌아가기</a><p> | </p><input type="submit" value="삭제"></td>
   </tr>
-  <%
-    }else {
-  %>
-  <td colspan="6"><br/>정보가 존재하지 않습니다.<br/><br/></td>
   <%
     }
   %>

@@ -1,4 +1,3 @@
-<%@ page import="Location.*" %>
 <%@ page import="Database.DataBaseService" %>
 <%@ page import="Database.DisLocation" %>
 <%@ page import="TbPublicWifiInfo.Wifi" %>
