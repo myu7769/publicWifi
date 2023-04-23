@@ -64,11 +64,14 @@
 <br/>
 <%
     String mgrNo = request.getParameter("mgrNo");
-    String distance = request.getParameter("distance");
+    double distance = 0.0;
 
     if(request != null && mgrNo != null ) {
         DataBaseService dataBaseService = new DataBaseService();
         Wifi wifi = dataBaseService.getWifiDetails(mgrNo);
+        Location location = new Location(DataBaseService.getLnt(),DataBaseService.getLat());
+        location.setDistance(new Location(wifi.getLAT(),wifi.getLNT()));
+        distance = location.getDistance();
 
 %>
 <br/>
@@ -91,7 +94,7 @@
     <tr>
         <tr>
         <th>거리(KM)</th>
-        <td><%=String.format("%5.2f", Double.parseDouble(distance) * 1000)%>(m)</td>
+        <td><%=String.format("%5.2f", distance * 1000)%>(m)</td>
         </tr>
         <tr>
         <th>관리번호</th>

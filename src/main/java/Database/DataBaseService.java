@@ -14,6 +14,25 @@ public class DataBaseService {
     // 데이터베이스 파일의 경로를 지정합니다.
     String url = "jdbc:mariadb://localhost:3306/db1";
 
+    static String lat;
+    static String lnt;
+
+    public static String getLat() {
+        return lat;
+    }
+
+    public static void setLat(String lat) {
+        DataBaseService.lat = lat;
+    }
+
+    public static String getLnt() {
+        return lnt;
+    }
+
+    public static void setLnt(String lnt) {
+        DataBaseService.lnt = lnt;
+    }
+
     public ArrayList<Wifi> getWifiList() {
 
         Connection conn = null;
@@ -186,7 +205,7 @@ public class DataBaseService {
         return wifiArray;
     }
 
-    public void saveUserLocation (String lat, String lnt){
+    public void saveUserLocation (){
 
         Connection conn = null;
         PreparedStatement preparedStatement = null;
@@ -456,5 +475,339 @@ public class DataBaseService {
 
         }
         return wifi;
+    }
+    public void creatBookMark (String name, int sequence){
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+            int affected = 0;
+
+            // 쿼리를 실행합니다.
+            String sql = " insert into bookmark (name, sequence, registerTime) values ( ?, ? , now());";
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1,name);
+            preparedStatement.setInt(2,sequence);
+
+            affected = preparedStatement.executeUpdate();
+
+            // 결과를 처리합니다.
+            if (affected == 1) {
+                System.out.println("user DB 저장 성공");
+            } else {
+                System.out.println("user DB 저장 실패");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+    public ArrayList<BookMark> getAllBookMark() {
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        ArrayList<BookMark> bookMarks = new ArrayList<>();
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+
+            // 쿼리를 실행합니다.
+            String sql = " select id, name, sequence, registerTime, alterTime from bookmark ";
+
+            preparedStatement = conn.prepareStatement(sql);
+
+            rs = preparedStatement.executeQuery();
+
+            // 결과를 처리합니다.
+            // 결과 처리 코드
+            while (rs.next()) {
+                bookMarks.add(new BookMark(rs.getInt("id"), rs.getString("name"), rs.getInt("sequence"),
+                        rs.getString("registerTime"), rs.getString("alterTime")));
+
+            }
+
+            if(bookMarks == null){
+                System.out.println("북마크 정보 실패");
+            }else{
+                System.out.println("북마크 정보 성공");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return bookMarks;
+    }
+    public boolean deleteBookMark(int id){
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+            int affected = 0;
+
+            // 쿼리를 실행합니다.
+            String sql = " delete from bookmark where id = ? ; ";
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            affected = preparedStatement.executeUpdate();
+
+//            sql = " select count(*) from userHistory; ";
+//            preparedStatement = conn.prepareStatement(sql);
+//            rs = preparedStatement.executeQuery();
+//
+//            String check = rs.getString("count(*)");
+//
+//            System.out.println("check = " + check);
+//
+//            if()
+//            sql = " alter table userHistory AUTO_INCREMENT=1; ";
+
+
+            if(affected == 1){
+                System.out.println("삭제 성공");
+                return true;
+            }else{
+                System.out.println("삭제 실패");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        return true;
+    }
+
+    public BookMark getBookMarkById(int id) {
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        BookMark bookMark = null;
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+
+            // 쿼리를 실행합니다.
+            String sql = "  select id, name, sequence, registerTime, alterTime from bookmark where id = ? ";
+
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            rs = preparedStatement.executeQuery();
+
+
+            // 결과를 처리합니다.
+            // 결과 처리 코드
+            while (rs.next()) {
+                bookMark = new BookMark(rs.getInt("id"), rs.getString("name"), rs.getInt("sequence"),
+                        rs.getString("registerTime"), rs.getString("alterTime"));
+            }
+
+            if(bookMark == null){
+                System.out.println("상세 정보 실패");
+            }else{
+                System.out.println("상세 정보 성공");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return bookMark;
+    }
+    public BookMark updateBookMark(int id, String name, int sequence) {
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        BookMark bookMark = null;
+
+        try {
+            // SQLite JDBC 드라이버를 로드합니다.
+            Class.forName("org.mariadb.jdbc.Driver");
+
+            // 데이터베이스에 연결합니다.
+            conn = DriverManager.getConnection(url, dbId, dbPwd);
+
+            // 쿼리를 실행합니다.
+            String sql = "  UPDATE bookmark SET name = ? , sequence = ?, alterTime = now() WHERE id = ? ; ";
+
+            preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, sequence);
+            preparedStatement.setInt(3, id);
+
+            rs = preparedStatement.executeQuery();
+
+
+            // 결과를 처리합니다.
+            // 결과 처리 코드
+            while (rs.next()) {
+                bookMark = new BookMark(rs.getInt("id"), rs.getString("name"), rs.getInt("sequence"),
+                        rs.getString("registerTime"), rs.getString("alterTime"));
+            }
+
+            if(bookMark == null){
+                System.out.println("상세 정보 실패");
+            }else{
+                System.out.println("상세 정보 성공");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 연결을 닫습니다.
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (conn != null && !conn.isClosed()) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return bookMark;
     }
 }

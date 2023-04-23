@@ -60,9 +60,9 @@
 <p> | </p>
 <a href="load-wifi">Open API 와이파이 정보 가져오기</a>
 <p> | </p>
-<a href="hello-servlet">즐겨 찾기 보기</a>
+<a href="bookmark-group.jsp">즐겨 찾기 보기</a>
 <p> | </p>
-<a href="hello-servlet">즐겨 찾기 그룹 보기</a>
+<a href="bookmark-group.jsp">즐겨 찾기 그룹 보기</a>
 <br/>
 <br/>
 <form id="getWifiTable" action="<%= request.getRequestURI() %>" method="get">
@@ -107,7 +107,9 @@
 
                     if(request != null && LAT != null && LNT != null) {
                         DataBaseService dataBaseService = new DataBaseService();
-                        dataBaseService.saveUserLocation(LNT,LAT);
+                        DataBaseService.setLat(LNT);
+                        DataBaseService.setLnt(LAT);
+//                        dataBaseService.saveUserLocation(LNT,LAT);
                         ArrayList<Wifi> wifis = dataBaseService.getWifiList();
                         DisLocation[] disLocation = dataBaseService.getNearWifi(wifis, new Location(LAT,LNT));
                         System.out.println(disLocation[0].getDistance() * 1000 + "(m)");
@@ -121,7 +123,7 @@
         <td><%=disLocation[i].getWifi().getX_SWIFI_WRDOFC()%>
         </td>
         <td>
-            <a href="detail.jsp?mgrNo=<%=disLocation[i].getWifi().getX_SWIFI_MGR_NO()%>&distance=<%=disLocation[i].getDistance()%>">
+            <a href="detail.jsp?mgrNo=<%=disLocation[i].getWifi().getX_SWIFI_MGR_NO()%>">
                 <%=disLocation[i].getWifi().getX_SWIFI_MAIN_NM()%>
             </a>
         </td>
