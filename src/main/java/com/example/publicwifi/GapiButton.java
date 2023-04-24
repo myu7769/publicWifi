@@ -22,7 +22,6 @@ public class GapiButton extends HttpServlet {
         dispatcher.forward(request, response);
 
     }
-
     public void destroy() {
     }
 }

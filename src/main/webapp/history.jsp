@@ -32,7 +32,7 @@
             text-align: center;
         }
     </style>
-    <title>JSP - Hello World</title>
+    <title>Wifi 정보 구하기</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function userRemove(userid) {
@@ -45,7 +45,7 @@
                   id : userid
                 },
                 success: function(data) {
-                    alert("success" + userid);
+                    alert("삭제되었습니다.");
                     $('#' + data.id).remove();
                 },
                 error: function(xhr, status, error) {
@@ -53,21 +53,6 @@
                 }
             });
     }
-
-    function myLocation() {
-            $.ajax({
-                url: "getLocation.jsp",
-                type: "GET",
-                dataType: "json",
-                success: function(data) {
-                    document.getElementById("LAT").value = data.lat;
-                    document.getElementById("LNT").value = data.lnt;
-                },
-                error: function(xhr, status, error) {
-                    console.log("Error: " + error);
-                }
-            });
-        }
     </script>
 </head>
 <body>

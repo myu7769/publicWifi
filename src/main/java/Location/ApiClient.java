@@ -4,14 +4,12 @@
  * Copyright 2007 NHN Corp. All rights Reserved.
  * NHN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
+
 package Location;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -20,7 +18,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -36,6 +33,13 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
+
+/*
+* 
+* 직접 짠게 아니라 naverApi 샘플 코드임
+* 
+* 
+* */
 public class ApiClient {
 	private final String accessKey;
 	private final String secretKey;
@@ -122,7 +126,6 @@ public class ApiClient {
 
 	/**
 	 * @param requestParameters
-	 * @param significateParameters
 	 */
 	private static SortedMap<String, SortedSet<String>> convertTypeToSortedMap(final Map<String, List<String>> requestParameters) {
 		final SortedMap<String, SortedSet<String>> significateParameters = new TreeMap<String, SortedSet<String>>();

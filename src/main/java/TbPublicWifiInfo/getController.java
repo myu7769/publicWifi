@@ -26,15 +26,10 @@ public class getController {
                     break;
                 }
                 wifiSize = wifis.size();
-
                 dataBaseService.insertWifiList(wifis);
                 successCnt += wifiSize;
                 start += 1000;
                 end += 1000;
-//                  cnt++;//
-//                  System.out.println("cnt = " + cnt);
-//                  System.out.println("     wifiSize = " + wifiSize);
-                System.out.println("successCnt = " + successCnt);
             }
         } catch (Exception e) {
             e.printStackTrace();

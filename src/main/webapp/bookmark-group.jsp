@@ -30,7 +30,7 @@
             text-align: center;
         }
     </style>
-    <title>JSP - Hello World</title>
+    <title>Wifi 정보 구하기</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     </script>

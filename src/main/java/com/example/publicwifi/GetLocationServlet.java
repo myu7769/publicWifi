@@ -35,7 +35,6 @@ public class GetLocationServlet extends HttpServlet {
         responseData.put("lat", lat);
         responseData.put("lnt", lnt);
 
-
         // JSON 형식으로 응답
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -47,6 +46,5 @@ public class GetLocationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
-
 }
 

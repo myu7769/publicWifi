@@ -15,21 +15,17 @@ import java.io.PrintWriter;
 public class loadWifi extends HttpServlet {
     private String message;
 
-    public void init() {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
         getController getController = new getController();
         long beforeTime = System.currentTimeMillis();
+
         int wifiAllCnt = getController.getAllWifi();
         message = wifiAllCnt +"";
-
+        PrintWriter out = response.getWriter();
         long afterTime = System.currentTimeMillis();
 
         System.out.println("시간 차이(ms) : " + (afterTime - beforeTime));
-    }
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-        PrintWriter out = response.getWriter();
         out.print("<html><head><title>Query 문자열 테스트</title></head>");
         out.println("<body>");
         out.println("<h1>" + message + "개의 Wifi 정보를 정상적으로 저장하였습니다. </h1>");

@@ -33,7 +33,6 @@ public class WifiGetInfoOkhttp {
         System.out.println("url = " + url);
 
         try {
-            // String url = "http://openapi.seoul.go.kr:8088/sample/json/TbPublicWifiInfo/1/3/서대문구/서소문로";
             OkHttpClient client = new OkHttpClient();
             Request.Builder builder = new Request.Builder().url(url).get();
             Request request = builder.build();
@@ -64,7 +63,6 @@ public class WifiGetInfoOkhttp {
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         return null;
     }
 }

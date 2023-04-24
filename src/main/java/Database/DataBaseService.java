@@ -29,9 +29,7 @@ public class DataBaseService {
         return lnt;
     }
 
-    public static void setLnt(String lnt) {
-        DataBaseService.lnt = lnt;
-    }
+    public static void setLnt(String lnt) {DataBaseService.lnt = lnt; }
 
     public ArrayList<Wifi> getWifiList() {
 

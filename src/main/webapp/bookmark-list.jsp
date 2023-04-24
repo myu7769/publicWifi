@@ -7,7 +7,6 @@
 --%>
 <%@ page import="Database.DataBaseService" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="Database.User" %>
 <%@ page import="Database.BookMarkWikis" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -27,7 +26,8 @@
         th, td {
             border: 1px solid #ddd;
             padding: 10px 20px;
-            text-align: left;
+            text-align: center;
+            font-size: 11px;
         }
 
         th {
@@ -36,7 +36,7 @@
             text-align: center;
         }
     </style>
-    <title>JSP - Hello World</title>
+    <title>Wifi 정보 구하기</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function userRemove(userid) {

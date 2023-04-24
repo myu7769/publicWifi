@@ -4,7 +4,6 @@ public class BookMarkWikis {
 
     int id;
     String bookMarkName;
-
     String SWIFI_MGR_NO;
     String SWIFI_MAIN_NM;
     String registerTime;
